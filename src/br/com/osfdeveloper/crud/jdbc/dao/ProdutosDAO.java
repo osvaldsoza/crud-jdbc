@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.jdbc.Statement;
+
 import br.com.osfdeveloper.crud.jdbc.modelo.Produto;
 
 public class ProdutosDAO {
@@ -21,10 +23,17 @@ public class ProdutosDAO {
 
 		String sql = "insert into Produto (nome, descricao) values (?, ?)";
 
-		try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+		try (PreparedStatement pstm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 			pstm.setString(1, produto.getNome());
 			pstm.setString(2, produto.getDescricao());
 			pstm.execute();
+			
+			try(ResultSet rs = pstm.getGeneratedKeys()){
+				if(rs.next()){
+					int id = rs.getInt("id");
+					produto.setId(id);
+				}
+			}
 		}
 	}
 

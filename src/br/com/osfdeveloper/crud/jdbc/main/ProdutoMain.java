@@ -17,7 +17,7 @@ public class ProdutoMain {
 	
 	public static void insert(){
 		
-		Produto mesa = new Produto("Mesa de 6 lugares", "Mesa Lux 2000");
+		Produto mesa = new Produto("Bicicleta Caloi", "Bicicleta Caloi 12 marchas");
 		
 		try (Connection connection = new ConnectionPool().getConnection()) {
 			ProdutosDAO produtosDAO = new ProdutosDAO(connection);
